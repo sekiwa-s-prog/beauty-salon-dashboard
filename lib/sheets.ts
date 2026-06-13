@@ -124,12 +124,14 @@ export async function saveManualFields(month: string, updates: ManualUpdate[]): 
   if (updates.length === 0) return
   const sheets = google.sheets({ version: 'v4', auth: getAuth(false) })
 
-  // Read header to find column positions
+  // Read first 3 rows to find actual header row (row 1 is the month marker)
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: SPREADSHEET_ID,
-    range: `'${month}'!A1:T1`,
+    range: `'${month}'!A1:T3`,
   })
-  const header = (res.data.values?.[0] ?? []) as string[]
+  const allRows = res.data.values ?? []
+  const headerRow = allRows.find((r) => r[0] === '店舗') ?? []
+  const header = headerRow as string[]
 
   const cNewNom  = header.indexOf('新規指名数')
   const cNewFree = header.indexOf('新規フリー数')
