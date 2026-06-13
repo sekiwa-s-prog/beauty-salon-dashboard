@@ -42,6 +42,10 @@ export interface StaffRow {
   newLossRate: string
   totalCustomers: number
   totalNominations: number
+  newNominations: string
+  newFree: string
+  stylePost: string
+  blogPost: string
 }
 
 function toInt(v: string | undefined): number {
@@ -97,5 +101,9 @@ export async function getMonthData(month: string): Promise<StaffRow[]> {
       newLossRate:      r[col('新規失客率')]     || '-',
       totalCustomers:   toInt(r[col('総合客数')]),
       totalNominations: toInt(r[col('合計指名数')]),
+      newNominations:   r[col('新規指名数')]    || '-',
+      newFree:          r[col('新規フリー数')]  || '-',
+      stylePost:        r[col('スタイル投稿数')]|| '-',
+      blogPost:         r[col('ブログ投稿数')]  || '-',
     }))
 }
