@@ -68,7 +68,7 @@ export async function getMonthData(month: string): Promise<StaffRow[]> {
   const sheets = google.sheets({ version: 'v4', auth: getAuth() })
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: SPREADSHEET_ID,
-    range: `'${month}'!A1:P500`,
+    range: `'${month}'!A1:T500`,
   })
 
   const rows = res.data.values ?? []
